@@ -35,7 +35,7 @@ spec:
             passwd: "$6$rounds=4096$D6cf92nq$cgBveQHTP7IK3CIYTNkVJyzd0Vze6l1QlV9sWSXiTma2hOCTl7bFSh4nvK5qPMvNlnDtlIm03arG5Uh866E9w."
             lock_passwd: False
           runcmd:
-            - wget -O packetgen.sh https://git.onap.org/multicloud/k8s/plain/kud/tests/vFW/packetgen
+            - wget -O packetgen.sh https://github.com/mahsa-frj/demo/blob/master/packetgen
             - bash -c 'set -a; . /etc/cloud/environment; bash packetgen.sh'
         VirtletRootVolumeSize: 5Gi
         k8s.v1.cni.cncf.io/networks: "{{ .Values.net_attachment_definition }}"
