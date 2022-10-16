@@ -32,20 +32,6 @@ function install_vpp {
     sudo apt-get install -y -qq vpp vpp-plugin-core vpp-plugin-dpdk
 }
 
-function _untar_url {
-    local repo_url="https://nexus.onap.org/content/repositories/releases/org/onap/demo/vnf/"
-    local file_subpath=$1
-
-    wget -q -O tmp_file.tar.gz "${repo_url}/${file_subpath}"
-    sha1=$(wget "${repo_url}/${file_subpath}.sha1" -q -O -)
-    if [[ $(sha1sum tmp_file.tar.gz  | awk '{print $1}') != "$sha1" ]]; then
-        echo "The downloaded file is corrupted"
-        exit 1
-    fi
-    tar -zmxf tmp_file.tar.gz
-    rm tmp_file.tar.gz
-}
-
 # install_vfw_scripts() -
 function install_vfw_scripts {
     version=$(cat /opt/config/demo_artifacts_version.txt)
@@ -54,10 +40,12 @@ function install_vfw_scripts {
     wget -q https://git.onap.org/demo/plain/vnfs/vFW/scripts/{v_packetgen_init,vpacketgen,run_traffic_fw_demo}.sh
     chmod +x ./*.sh
 
-    _untar_url "sample-distribution/${version}/sample-distribution-${version}-hc.tar.gz"
+    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/sample-distribution-1.6.0-hc.tar.gz
+    tar -zmxf sample-distribution-1.6.0-hc.tar.gz
     mv "sample-distribution-$version" honeycomb
 
-    _untar_url "vfw/vfw_pg_streams/$version/vfw_pg_streams-$version-demo.tar.gz"
+    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/vfw_pg_streams-1.6.0-demo.tar.gz
+    tar -zmxf vfw_pg_streams-1.6.0-demo.tar.gz
     mv "vfw_pg_streams-$version" pg_streams
 
     sed -i 's/"restconf-binding-address": "127.0.0.1",/"restconf-binding-address": "0.0.0.0",/g' /opt/honeycomb/config/honeycomb.json
