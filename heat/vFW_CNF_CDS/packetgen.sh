@@ -44,7 +44,7 @@ function install_vfw_scripts {
     tar -zmxf sample-distribution-1.6.0-hc.tar.gz
     mv "sample-distribution-$version" honeycomb
 
-    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/vfw_pg_streams-1.6.0-demo.tar.gz
+    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/vfw_pg_streams-1.6.0.tar.gz
     tar -zmxf vfw_pg_streams-1.6.0-demo.tar.gz
     mv "vfw_pg_streams-$version" pg_streams
 
