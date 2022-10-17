@@ -37,7 +37,7 @@ function install_vfw_scripts {
     version=$(cat /opt/config/demo_artifacts_version.txt)
 
     pushd /opt
-    wget -q https://git.onap.org/demo/plain/vnfs/vFW/scripts/{v_packetgen_init,vpacketgen,run_traffic_fw_demo}.sh
+    wget -q https://raw.githubusercontent.com/mahsa-frj/demo/master/heat/vFW_CNF_CDS/{v_packetgen_init,vpacketgen,run_traffic_fw_demo}.sh
     chmod +x ./*.sh
 
     wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/sample-distribution-1.6.0-hc.tar.gz
