@@ -47,7 +47,8 @@ function install_vfw_scripts {
     mkdir -p honeycomb
     mv "sample-distribution-$version" honeycomb
 
-    _untar_url "ves5/ves/${version}/ves-${version}-demo.tar.gz"
+    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/ves-1.6.0-demo.tar.gz
+    tar -zmxf ves-1.6.0-demo.tar.gz
     mv "ves-$version" "$ves_path"
 
     _untar_url "ves5/ves_vfw_reporting/${version}/ves_vfw_reporting-${version}-demo.tar.gz"
