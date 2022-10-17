@@ -32,20 +32,6 @@ function install_vpp {
     sudo apt-get install -y -qq vpp vpp-plugin-core vpp-plugin-dpdk
 }
 
-function _untar_url {
-    local repo_url="https://nexus.onap.org/content/repositories/releases/org/onap/demo/vnf/"
-    local file_subpath=$1
-
-    wget -q -O tmp_file.tar.gz "${repo_url}/${file_subpath}"
-    sha1=$(wget "${repo_url}/${file_subpath}.sha1" -q -O -)
-    if [[ $(sha1sum tmp_file.tar.gz  | awk '{print $1}') != "$sha1" ]]; then
-        echo "The downloaded file is corrupted"
-        exit 1
-    fi
-    tar -zmxf tmp_file.tar.gz
-    rm tmp_file.tar.gz
-}
-
 # install_vfw_scripts() -
 function install_vfw_scripts {
     version=$(cat /opt/config/demo_artifacts_version.txt)
@@ -53,10 +39,11 @@ function install_vfw_scripts {
     local ves_reporting_path="${ves_path}/evel/evel-library"
 
     pushd /opt
-    wget -q https://git.onap.org/demo/plain/vnfs/vFW/scripts/{v_firewall_init,vfirewall}.sh
+    wget https://raw.githubusercontent.com/mahsa-frj/demo/master/heat/vFW_CNF_CDS/{v_firewall_init,vfirewall}.sh
     chmod +x ./*.sh
 
-    _untar_url "sample-distribution/${version}/sample-distribution-${version}-hc.tar.gz"
+    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/sample-distribution-1.6.0-hc.tar.gz
+    tar -zmxf sample-distribution-1.6.0-hc.tar.gz  
     mkdir -p honeycomb
     mv "sample-distribution-$version" honeycomb
 
