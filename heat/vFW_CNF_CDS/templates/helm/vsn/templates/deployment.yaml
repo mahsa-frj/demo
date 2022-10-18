@@ -21,23 +21,6 @@ spec:
         release: {{ .Release.Name }}
         chart: {{ .Chart.Name }}
       annotations:
-        VirtletLibvirtCPUSetting: |
-          mode: host-model
-        VirtletCloudInitUserData: |
-          ssh_pwauth: True
-          users:
-          - name: admin
-            gecos: User
-            primary-group: admin
-            groups: users
-            sudo: ALL=(ALL) NOPASSWD:ALL
-            # Password is "testuser"
-            passwd: "$6$rounds=4096$D6cf92nq$cgBveQHTP7IK3CIYTNkVJyzd0Vze6l1QlV9sWSXiTma2hOCTl7bFSh4nvK5qPMvNlnDtlIm03arG5Uh866E9w."
-            lock_passwd: False
-          runcmd:
-            - wget https://raw.githubusercontent.com/electrocucaracha/vFW-demo/master/sink.sh
-            - bash -c 'set -a; . /etc/cloud/environment; bash firewall.sh'
-        VirtletRootVolumeSize: 5Gi
         k8s.v1.cni.cncf.io/networks: "{{ .Values.net_attachment_definition }}"
         k8s.plugin.opnfv.org/nfn-network: |
             { "type": "ovn4nfv",
@@ -53,24 +36,21 @@ spec:
               ]
             }
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: extraRuntime
-                operator: In
-                values:
-                - virtlet
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        tty: true
-        stdin: true
+        image: "{{ .Values.image.sinkrepo }}:{{ .Values.image.sinktag }}"
         envFrom:
         - configMapRef:
             name: {{ .Values.vsn_name_0 }}-configmap
-        resources:
-          limits:
-            memory: {{ .Values.resources.limits.memory }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        tty: true
+        stdin: true
+        securityContext:
+          privileged: true
+      - name: darkstat
+        image: "{{ .Values.image.darkstatrepo }}:{{ .Values.image.darkstattag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        tty: true
+        stdin: true
+        ports:
+          - containerPort: {{ .Values.service.ports.port }}
