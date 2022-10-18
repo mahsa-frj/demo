@@ -1,12 +1,16 @@
 # Static Defaults
 replicaCount: 1
 image:
-  repository: virtlet.cloud/ubuntu/18.04
-  tag: latest
+  sinkrepo: rtsood/onap-vfw-demo-sink
+  sinktag: 0.2.0
   pullPolicy: IfNotPresent
-resources:
-  limits:
-    memory: 4Gi
+  darkstatrepo: electrocucaracha/darkstat
+  darkstattag: latest
+service: #service for sink darkstat-ui
+  type: NodePort
+  ports:
+    port: 667
+    nodePort: 30667
 
 # Names
 vnf_name: test-vnf
