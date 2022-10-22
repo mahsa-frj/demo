@@ -51,7 +51,7 @@ function install_vfw_scripts {
     tar -zmxf ves-1.6.0-demo.tar.gz
     mv "ves-$version" "$ves_path"
 
-    https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/ves_vfw_reporting-1.6.0-demo.tar.gz
+    wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/ves_vfw_reporting-1.6.0-demo.tar.gz
     tar -zmxf ves_vfw_reporting-1.6.0-demo.tar.gz
     mkdir -p $ves_reporting_path/code
     mv "ves_vfw_reporting-$version" "$ves_reporting_path/code/VESreporting"

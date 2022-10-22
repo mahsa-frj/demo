@@ -40,7 +40,7 @@ class Config:
     RELEASE_NAME = "vfw-1"
 
     VENDOR = "vendor_cnf"
-    SERVICENAME = "vfw_k8s_demo_CNF" + "_" + str(SCENARIO)
+    SERVICENAME = "vfw_k8s_demo_CNFMF10" + "_" + str(SCENARIO)
     VSPNAME = "VSP_" + SERVICENAME
     VFNAME = "VF_" + SERVICENAME
     SERVICE_INSTANCE_NAME = "INSTANCE_" + SERVICENAME

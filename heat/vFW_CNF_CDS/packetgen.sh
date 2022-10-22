@@ -45,7 +45,7 @@ function install_vfw_scripts {
     mv "sample-distribution-$version" honeycomb
 
     wget https://github.com/mahsa-frj/demo/raw/master/heat/vFW_CNF_CDS/vfw_pg_streams-1.6.0.tar.gz
-    tar -zmxf vfw_pg_streams-1.6.0-demo.tar.gz
+    tar -zmxf vfw_pg_streams-1.6.0.tar.gz
     mv "vfw_pg_streams-$version" pg_streams
 
     sed -i 's/"restconf-binding-address": "127.0.0.1",/"restconf-binding-address": "0.0.0.0",/g' /opt/honeycomb/config/honeycomb.json
