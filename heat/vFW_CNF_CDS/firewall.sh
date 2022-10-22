@@ -28,8 +28,9 @@ function install_vpp {
     source /etc/os-release || source /usr/lib/os-release
     echo "deb [trusted=yes] https://packagecloud.io/fdio/release/ubuntu $VERSION_CODENAME main" | sudo tee /etc/apt/sources.list.d/99fd.io.list
     curl -L https://packagecloud.io/fdio/release/gpgkey | sudo apt-key add -
-    sudo apt-get update
-    sudo apt-get install -y -qq vpp vpp-plugin-core vpp-plugin-dpdk
+    apt-get install -y -qq --no-install-recommends vpp
+    mkdir -p /var/log/vpp/
+    rm -rf /var/lib/apt/lists/*
 }
 
 # install_vfw_scripts() -
